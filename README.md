@@ -29,4 +29,4 @@
 2. `zgen save` to create a new `init.zsh`
 3. start a new iTerm window to load the new configuration.
 
-### Inspired [fishy](https://github.com/robbyrussell/oh-my-zsh/wiki/themes#fishy)
+#### Inspired by [Original fishy](https://github.com/robbyrussell/oh-my-zsh/wiki/themes#fishy)
