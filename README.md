@@ -28,3 +28,5 @@
 1. Add `zgen load akinjide/fishy2 themes` to your `.zshrc` with your other `zgen load` commands
 2. `zgen save` to create a new `init.zsh`
 3. start a new iTerm window to load the new configuration.
+
+### Inspired [fishy](https://github.com/robbyrussell/oh-my-zsh/wiki/themes#fishy)
