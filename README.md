@@ -1,4 +1,4 @@
-##### fishy2
+### fishy2
 
 #### A ZSH theme
 
