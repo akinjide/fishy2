@@ -52,6 +52,22 @@ function virtualenv_prompt_info(){
   echo "${ZSH_THEME_VIRTUALENV_PREFIX:=(}${VIRTUAL_ENV:t}${ZSH_THEME_VIRTUALENV_SUFFIX:=) }"
 }
 
+if [ -z $PUBLIC_IP ]; then
+  export PUBLIC_IP=$(curl -m 0.5 -s icanhazip.com)
+fi
+
+function public_ip() {
+  [[ -n ${PUBLIC_IP} ]] || return
+  echo "%{$fg_bold[white]%}$PUBLIC_IP%{$reset_color%} "
+}
+
+function local_ip() {
+  LOCAL_IP=$(ipconfig getifaddr en0)
+
+  [[ -n ${LOCAL_IP} ]] || return
+  echo "%{$fg_bold[magenta]%}$LOCAL_IP%{$reset_color%} "
+}
+
 # disables prompt mangling in virtual_env/bin/activate
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
@@ -59,7 +75,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 # $(printf '-%.0s' {1..$(tput cols)})%{$reset_color%}
 local user_color='green'; [ $UID -eq 0 ] && user_color='red'
 PROMPT='$FG[237]------------------------------------------------------------%{$reset_color%}
-$(ssh_connection)$(virtualenv_prompt_info)%n@%m %{$fg[$user_color]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
+$(ssh_connection)$(public_ip)$(local_ip)$(virtualenv_prompt_info)%n@%m %{$fg[$user_color]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
 
 # local return_status="%{$fg_bold[red]%}%(?..%?)%{$reset_color%}"
