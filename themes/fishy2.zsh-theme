@@ -61,21 +61,19 @@ function public_ip() {
   echo "%{$fg_bold[white]%}$PUBLIC_IP%{$reset_color%} "
 }
 
-function local_ip() {
-  LOCAL_IP=$(ipconfig getifaddr en0)
+function private_ip() {
+  PRIVATE_IP=$(ipconfig getifaddr en0)
 
-  [[ -n ${LOCAL_IP} ]] || return
-  echo "%{$fg_bold[magenta]%}$LOCAL_IP%{$reset_color%} "
+  [[ -n ${PRIVATE_IP} ]] || return
+  echo "%{$fg_bold[magenta]%}$PRIVATE_IP%{$reset_color%} "
 }
 
 # disables prompt mangling in virtual_env/bin/activate
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-# TODO: calculate terminal window width for line
-# $(printf '-%.0s' {1..$(tput cols)})%{$reset_color%}
 local user_color='green'; [ $UID -eq 0 ] && user_color='red'
-PROMPT='$FG[237]------------------------------------------------------------%{$reset_color%}
-$(ssh_connection)$(public_ip)$(local_ip)$(virtualenv_prompt_info)%n@%m %{$fg[$user_color]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
+PROMPT='
+$(ssh_connection)$(public_ip)$(private_ip)$(virtualenv_prompt_info)%n@%m %{$fg[$user_color]%}$(_fishy_collapsed_wd)%{$reset_color%}%(!.#.>) '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
 
 # local return_status="%{$fg_bold[red]%}%(?..%?)%{$reset_color%}"
